@@ -341,14 +341,18 @@ loadObjFile("WaterLine.glb", eMat, {x:0,y:-5,z:-19.8},{x:2,y:1,z:1}, "E4");
 
 const onMouseMove = (event) => {
     event.preventDefault();
+    if(event.touches){
+        event.clientX = event.touches[0].clientX;
+        event.clientY = event.touches[0].clientY;
+    }
     mouse.x = (event.clientX/window.innerWidth)*2-1;
     mouse.y = -(event.clientY/window.innerHeight)*2+1;
     if(mouseDown) {
         raycaster.setFromCamera(mouse, camera);
         let intersects = raycaster.intersectObjects(objects);
-        console.log("Intersects Length:" + intersects.length);
+        //console.log("Intersects Length:" + intersects.length);
         if (intersects.length > 0) {
-            console.log(intersects[0].object.name);
+            //console.log(intersects[0].object.name);
             if (selectedString !== intersects[0].object.name) {
                 selectedString = intersects[0].object.name;
                 switch (intersects[0].object.name) {
@@ -439,6 +443,9 @@ window.addEventListener('resize', onWindowResize, false);
 window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
+window.addEventListener('touchmove', onMouseMove, {passive:false});
+window.addEventListener('touchstart', onMouseDown, {passive:false});
+window.addEventListener('touchend', onMouseUp, {passive:false});
 
 animate();
 
@@ -448,6 +455,9 @@ const cleanup = () => {
     window.removeEventListener('mousemove', onMouseMove, false);
     window.removeEventListener('mousedown', onMouseDown, false);
     window.removeEventListener('mouseup', onMouseUp, false);
+    window.removeEventListener('touchmove', onMouseMove, {passive:false});
+    window.removeEventListener('touchstart', onMouseDown, {passive:false});
+    window.removeEventListener('touchend', onMouseUp, {passive:false});
     renderer.domElement.parentNode.removeChild(renderer.domElement);
   renderer.dispose();
   renderer = null;
