@@ -18,7 +18,9 @@
     "redux-thunk": "^2.3.0",
     "typescript": "3.6.3",
     "three": "^0.108.0",
-    "oimo": "^1.0.9"
+    "oimo": "^1.0.9",
+    "moment": "^2.24.0",
+    "pepjs": "^0.5.2"
   },
   "scripts": {
     "start": "react-scripts start",

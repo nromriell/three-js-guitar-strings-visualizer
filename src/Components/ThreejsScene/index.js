@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import React from 'react'
+import 'pepjs'
 
 import './ThreeJSScene.css'
 
@@ -340,11 +341,12 @@ loadObjFile("WaterLine.glb", bMat, {x:0,y:-3,z:-19.8},{x:2,y:1.2,z:1}, "B3");
 loadObjFile("WaterLine.glb", eMat, {x:0,y:-5,z:-19.8},{x:2,y:1,z:1}, "E4");
 
 const onMouseMove = (event) => {
-    event.preventDefault();
-    if(event.touches){
+   // event.preventDefault();
+    //console.log("Moving");
+   /*if(event.touches){
         event.clientX = event.touches[0].clientX;
         event.clientY = event.touches[0].clientY;
-    }
+    }*/
     mouse.x = (event.clientX/window.innerWidth)*2-1;
     mouse.y = -(event.clientY/window.innerHeight)*2+1;
     if(mouseDown) {
@@ -387,12 +389,12 @@ const onMouseMove = (event) => {
 };
 
 const onMouseUp = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     mouseDown = false;
 };
 
 const onMouseDown = (event) => {
-    event.preventDefault();
+    //event.preventDefault();
     mouseDown = true;
 };
 
@@ -440,24 +442,25 @@ const onWindowResize = () => {
 
 
 window.addEventListener('resize', onWindowResize, false);
-window.addEventListener('mousemove', onMouseMove, false);
+/*window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
 window.addEventListener('touchmove', onMouseMove, {passive:false});
 window.addEventListener('touchstart', onMouseDown, {passive:false});
-window.addEventListener('touchend', onMouseUp, {passive:false});
+window.addEventListener('touchend', onMouseUp, {passive:false});*/
+window.addEventListener('pointerdown', onMouseDown);
+window.addEventListener('pointermove', onMouseMove);
+window.addEventListener('pointerup', onMouseUp);
+window.addEventListener('pointercancel', onMouseUp);
 
 animate();
 
 const cleanup = () => {
     //window.document.removeChild()
-    window.removeEventListener('resize', onWindowResize, false);
-    window.removeEventListener('mousemove', onMouseMove, false);
-    window.removeEventListener('mousedown', onMouseDown, false);
-    window.removeEventListener('mouseup', onMouseUp, false);
-    window.removeEventListener('touchmove', onMouseMove, {passive:false});
-    window.removeEventListener('touchstart', onMouseDown, {passive:false});
-    window.removeEventListener('touchend', onMouseUp, {passive:false});
+    window.removeEventListener('pointerdown', onMouseDown);
+    window.removeEventListener('pointermove', onMouseMove);
+    window.removeEventListener('pointerup', onMouseUp);
+    window.removeEventListener('pointercancel', onMouseUp);
     renderer.domElement.parentNode.removeChild(renderer.domElement);
   renderer.dispose();
   renderer = null;
